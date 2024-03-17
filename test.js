@@ -70,3 +70,43 @@ function triggerCtrlMinus() {
     // Dispatch the custom event
     document.dispatchEvent(customEvent);
 }
+function findEighthWorkingDayOfMonth(year, month) {
+    // Initialize date to the 1st day of the month
+    let currentDate = new Date(year, month, 1);
+    let workingDayCount = 0;
+
+    // Iterate through each day of the month
+    while (workingDayCount < 8) {
+        // Move to the next day
+        currentDate.setDate(currentDate.getDate() + 1);
+
+        // Check if the current day is a working day (Monday to Friday)
+        const dayOfWeek = currentDate.getDay();
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Sunday (0) or Saturday (6)
+            workingDayCount++;
+        }
+    }
+
+    // Return the day of the month for the 8th working day
+    return currentDate.getDate();
+}
+
+
+describe('findEighthWorkingDayOfMonth function', () => {
+    test('March 2024', () => {
+        expect(findEighthWorkingDayOfMonth(2024, 2)).toBe(17); // March is 2nd month (0-based index), 17th is the 8th working day
+    });
+
+    test('February 2022', () => {
+        expect(findEighthWorkingDayOfMonth(2022, 1)).toBe(14); // February is 1st month (0-based index), 14th is the 8th working day
+    });
+
+    // Add more test cases as needed for different months and years
+});
+
+function endOfPreviousMonth() {
+    var today = new Date();
+    var previousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    var endOfPreviousMonth = new Date(previousMonth.getFullYear(), previousMonth.getMonth() + 1, 0);
+    return endOfPreviousMonth;
+}
